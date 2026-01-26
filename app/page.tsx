@@ -1,4 +1,9 @@
+'use client'
+
 import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
+
 import { skills } from "@/lib/content/skills"
 import { experience } from "@/lib/content/experience"
 import { publications } from "@/lib/content/publications"
@@ -22,12 +27,33 @@ export default function Page() {
   )
 }
 
+/**
+ * ScrollFade: Single place to control all section entry animation
+ */
+function ScrollFade({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const inView = useInView(ref, { once: true, margin: "-120px 0px" })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 18 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="py-28 px-6 md:px-12 lg:px-20 border-t border-border">
       <div className="max-w-5xl">
         <h2 className="text-4xl md:text-5xl font-bold mb-20 tracking-tight">{title}</h2>
-        {children}
+
+        {/* SINGLE Framer Motion wrapper applied once */}
+        <ScrollFade>{children}</ScrollFade>
       </div>
     </section>
   )
