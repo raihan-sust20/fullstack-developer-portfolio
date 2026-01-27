@@ -1,12 +1,12 @@
 'use client'
 
-import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react"
+import { Mail, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react"
 import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 
-import { skills } from "@/lib/content/skills"
 import { experience } from "@/lib/content/experience"
 import { publications } from "@/lib/content/publications"
+import { Skills } from "@/components/tech-skils"
 
 /**
  * Single-page portfolio
@@ -16,6 +16,7 @@ import { publications } from "@/lib/content/publications"
 export default function Page() {
   return (
     <main className="bg-background text-foreground antialiased">
+      <Navigation />
       <Hero />
       <Skills />
       <Experience />
@@ -24,6 +25,72 @@ export default function Page() {
       <Availability />
       <Footer />
     </main>
+  )
+}
+
+/**
+ * Navigation Bar
+ */
+function Navigation() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navLinks = [
+    { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Education', href: '#education' },
+    { name: 'Publications', href: '#publications' },
+    { name: 'Availability', href: '#availability' },
+  ]
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-lg' : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo & Name */}
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Terminal className="w-6 h-6 text-accent-foreground" />
+            </div>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-accent bg-clip-text text-transparent">
+              Raihan Ahmed
+            </span>
+          </a>
+
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button className="md:hidden p-2 text-muted-foreground hover:text-accent">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
   )
 }
 
@@ -86,32 +153,6 @@ function Hero() {
         </div>
       </div>
     </section>
-  )
-}
-
-function Skills() {
-  return (
-    <Section id="skills" title="Technical Skills">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {skills.map((group) => (
-          <div key={group.category} className="border border-border rounded-xl p-6 bg-card/40 backdrop-blur-sm hover:bg-card/60 transition-colors">
-            <h3 className="text-sm font-semibold text-accent uppercase tracking-widest mb-4">
-              {group.category}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {group.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 bg-accent/10 border border-accent/30 rounded-full text-sm font-medium text-accent"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
   )
 }
 

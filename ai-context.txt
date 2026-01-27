@@ -159,7 +159,6 @@
 //////////////////////////
 ///   tsconfig.json   ////
 //////////////////////////
-
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -188,15 +187,12 @@
   "exclude": ["node_modules"]
 }
 
+/////////////////////
+///   utils.ts   ////
+/////////////////////
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
-Step 2 — SEO metadata (layout.tsx)
-
-Makes this page look serious when shared or indexed
-
-Step 3 — Single scroll-fade abstraction
-
-One Framer Motion wrapper
-
-Applied once inside Section
-
-Zero animation noise
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
