@@ -4,9 +4,9 @@ import { Mail, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 
-import { experience } from "@/lib/content/experience"
 import { publications } from "@/lib/content/publications"
-import { Skills } from "@/components/tech-skils"
+import { Skills } from "@/components/tech-skills"
+import { Experience } from "@/components/experience"
 
 /**
  * Single-page portfolio
@@ -153,65 +153,6 @@ function Hero() {
         </div>
       </div>
     </section>
-  )
-}
-
-function Experience() {
-  return (
-    <Section id="experience" title="Professional Experience">
-      <div className="space-y-24">
-        {experience.map((role) => (
-          <ExperienceItem key={role.role} role={role.role} company={role.company} meta={role.meta}>
-            {role.projects.map((project) => (
-              <Project
-                key={project.title}
-                title={project.title}
-                stack={project.stack}
-                bullets={project.bullets}
-              />
-            ))}
-          </ExperienceItem>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function ExperienceItem({
-  role,
-  company,
-  meta,
-  children,
-}: {
-  role: string
-  company: string
-  meta: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h3 className="text-2xl font-bold">{role}</h3>
-        <p className="text-muted-foreground mt-2">
-          {company} • {meta}
-        </p>
-      </div>
-      <div className="space-y-12">{children}</div>
-    </div>
-  )
-}
-
-function Project({ title, stack, bullets }: { title: string; stack: string; bullets: string[] }) {
-  return (
-    <div>
-      <h4 className="text-lg font-semibold mb-3">{title}</h4>
-      <p className="text-sm text-muted-foreground mb-2">{stack}</p>
-      <ul className="space-y-2 text-sm text-muted-foreground">
-        {bullets.map((b) => (
-          <li key={b}>• {b}</li>
-        ))}
-      </ul>
-    </div>
   )
 }
 

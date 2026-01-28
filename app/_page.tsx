@@ -4,9 +4,9 @@ import { Mail, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 
-import { skills } from "@/lib/content/skills"
 import { experience } from "@/lib/content/experience"
 import { publications } from "@/lib/content/publications"
+import { Skills } from "@/components/tech-skills"
 
 /**
  * Single-page portfolio
@@ -153,32 +153,6 @@ function Hero() {
         </div>
       </div>
     </section>
-  )
-}
-
-function Skills() {
-  return (
-    <Section id="skills" title="Technical Skills">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {skills.map((group) => (
-          <div key={group.category} className="border border-border rounded-xl p-6 bg-card/40 backdrop-blur-sm hover:bg-card/60 transition-colors">
-            <h3 className="text-sm font-semibold text-accent uppercase tracking-widest mb-4">
-              {group.category}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {group.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 bg-accent/10 border border-accent/30 rounded-full text-sm font-medium text-accent"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
   )
 }
 
